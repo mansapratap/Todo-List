@@ -59,6 +59,13 @@ class ToDoListTableViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            itemArray.remove(at: indexPath.row)
+            saveData()
+        }
+    }
+    
     @IBAction func addButton(_ sender: UIBarButtonItem) {
         var textField = UITextField()
         let alert = UIAlertController(title: "New Item", message: "Add New Item to list.", preferredStyle: .alert)
