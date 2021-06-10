@@ -7,16 +7,17 @@ import UIKit
 
 class ToDoListTableViewController: UITableViewController {
     
+    // MARK: - Properties
     var itemArray = [Item]()
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Item.Plist")
     
+    // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         reloadItems()
     }
-//  Todo List
-//
     
+    // MARK: - Class Methods
     func saveData() {
         let encoder = PropertyListEncoder()
         do {
@@ -38,13 +39,12 @@ class ToDoListTableViewController: UITableViewController {
             }
         }
     }
-
+    
     // MARK: - Table view data source
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemArray.count
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "protoCell", for: indexPath)
         cell.textLabel?.text = itemArray[indexPath.row].content
@@ -53,7 +53,6 @@ class ToDoListTableViewController: UITableViewController {
     }
     
     // MARK:- TableView Delegates
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         itemArray[indexPath.row].isDone = !itemArray[indexPath.row].isDone
         saveData()
@@ -71,7 +70,7 @@ class ToDoListTableViewController: UITableViewController {
                 self.saveData()
             }
         }
-                
+        
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Write New Item"
             textField =  alertTextField
@@ -79,6 +78,8 @@ class ToDoListTableViewController: UITableViewController {
         }
         
         alert.addAction(alertAction)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
         present(alert, animated: true, completion: nil)
-        }
+    }
 }
